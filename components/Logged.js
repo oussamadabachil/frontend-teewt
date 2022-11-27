@@ -51,7 +51,7 @@ function Logged() {
   const findTweetFromHashtag = (x) => {
     let hashtag = x;
     let hashtagToFind = hashtag.replace("#", "");
-    fetch(`http://localhost:3000/users/tweets/hashtag/${hashtagToFind}`, {
+    fetch(`https://backend-teewt.vercel.app/users/tweets/hashtag/${hashtagToFind}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
