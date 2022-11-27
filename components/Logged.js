@@ -94,12 +94,17 @@ function Logged() {
 
   if(appearPopUpMessage){
     stylePopUpMessage={
-      'box-shadow': 'rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;',
       transition: "all .3s",
       opacity: "1",
       visibility: "visible",
       'top':"1rem",
-    }}
+    }
+
+  
+  }
+
+
+
 
 
   const tweet = () => {
@@ -296,7 +301,10 @@ function Logged() {
   return (
     <>
       <div className={style.main}>
-      <div className={styles.popUpMessage} style={stylePopUpMessage}>
+      <div className={styles.popUpMessage} onClick={
+        ()=>   setAppearPopUpMessage(false)
+
+      } style={stylePopUpMessage}>
         <div className={styles.popUpMessageContent}>
           <p style={stylePMessage}>{messageStatus}</p>
         </div>
