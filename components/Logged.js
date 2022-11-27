@@ -281,7 +281,6 @@ function Logged() {
     }
   }
   if (isOpen) {
-    alert("kndzz")
     styleMenuMobile = {
       transition: "all .3s",
       left: "0rem",

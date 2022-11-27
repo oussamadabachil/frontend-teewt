@@ -301,6 +301,8 @@
   cursor: pointer;
 }
 .menuMobile{
+
+  display: block;
   opacity: 0;
   visibility: hidden;
   transition: all .3s;
