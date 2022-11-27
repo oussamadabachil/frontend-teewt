@@ -48,29 +48,31 @@ function Logged() {
   let styleHashtag = {};
   let styleTextMax = {};
 
-
   const findTweetFromHashtag = (x) => {
-    fetch(`https://backend-teewt.vercel.app/users/tweets/hashtag/${x}`)
-      .then((response) => response.text())
+    let hashtag = x;
+    let hashtagToFind = hashtag.replace("#", "");
+    fetch(`http://localhost:3000/users/tweets/hashtag/${hashtagToFind}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
       .then((data) => {
-
-        if(data.result){
-
-        console.log(data);
-        }else{
-          console.log("no",data);
+        if (data.result) {
+          console.log(data);
+          setTweetData(data.tweets);
+        } else {
+          console.log("no", data);
 
           // setMessageNoTweet(true);
           // setMessageNoTweetP(true);
         }
-
       });
   };
 
-    
   const removeTweet = (x) => {
     // confirm(x)
-
     fetch(`https://backend-teewt.vercel.app/users/tweets/delete/${x}`, {
       method: "DELETE",
       headers: {
@@ -88,8 +90,6 @@ function Logged() {
           setAppearPopUpMessage(true);
           setMessageStatus(data.message);
         }
-
-        // console.log(data);
       });
   };
 
@@ -140,6 +140,7 @@ function Logged() {
 
     // refreshData()
 
+
     fetch("https://backend-teewt.vercel.app/users/tweets", {
       method: "POST",
       headers: {
@@ -150,7 +151,7 @@ function Logged() {
         username: logStatus[2].toString(),
         content: tweetContent.toString(),
         date: time,
-      }),
+        }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -187,7 +188,7 @@ function Logged() {
         <div className={style.ListTweet}>
           <ul>
             <li>
-              <img src="./iconetwitter.jpeg"></img>
+              <img src="./iconetwitter.jpeg" alt="icone twitter"></img>
             </li>
             <li>
               <span>{data.username}</span>@{data.firstname}
@@ -236,17 +237,16 @@ function Logged() {
   const allTweetHashtagData = tweetData.map((data, i) => {
     let hashtag = data.content.match(regexHashTag);
 
+
     if (hashtag) {
       arrayHashtag.push(hashtag[0]);
     }
 
-    //show unique element in array
     unique = [...new Set(arrayHashtag)];
 
-    //count the number of occurence of hashtag in array
   });
 
-  //know how many time the hashtag is used
+
 
   const hashtagList = unique.map((data, i) => {
     let tweetContentNbre = <>Tweet</>;
@@ -258,14 +258,12 @@ function Logged() {
 
     return (
       <>
-        <li  onClick={() => {
-              findTweetFromHashtag(data);
-            }}>
-          <span
-           
-          >
-            {data}
-          </span>
+        <li
+          onClick={() => {
+            findTweetFromHashtag(data);
+          }}
+        >
+          <span>{data}</span>
           <br></br>
           <span className={style.nbrTweet}>
             {tweetContentNbre}: {count}
@@ -325,25 +323,6 @@ function Logged() {
       visibility: "visible",
     };
   }
-
-  // let duplicateChar = arrayHashtag.filter((element, index) => {
-  //   return arrayHashtag.indexOf(element) !== index;
-  // });
-
-  //show only hashtag
-
-
-    // let hashtag = x;
-    // console.log(hashtag);
-    // fetch(`http://localhost:3000/users/tweets/${x}`)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     // setTweetData(data.tweets);
-    //   });
-  
-
-  //not showing the duplicate hashtag from the array and return the hashtag in a list
 
   return (
     <>
