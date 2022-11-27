@@ -159,7 +159,7 @@ const [messageStatus, setMessageStatus] = useState("")
       </div>
       
       <div className={styles.signUpPopUp} style={signUpStyle}>
-        <h3>Create your Hackatweet account</h3>
+        <h3>Create your Teewt account</h3>
         <span onClick={() => HideSUBlack()}>x</span>
         <img src="twitter_logo_white.png" alt="logo twitter"></img>
         <input
@@ -212,7 +212,7 @@ const [messageStatus, setMessageStatus] = useState("")
           <h1 className={styles.title}>
             See what's<br></br> happening
           </h1>
-          <h2>Join Hackatweet today</h2>
+          <h2>Join Teewt today</h2>
           <button onClick={() => appearSU()} className={styles.signUp}>
             Sign up
           </button>
