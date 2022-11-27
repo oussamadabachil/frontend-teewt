@@ -28,6 +28,8 @@ function App({ Component, pageProps }) {
           <Head>
             <title>Teewt</title>
             <meta meta name="viewport" content="width=device-width, user-scalable=no" />
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
           </Head>
           <Component {...pageProps} />
         </PersistGate>
