@@ -16,19 +16,24 @@ import {
   faBell,
   faEnvelope,
   faRightFromBracket,
-  faArrowLeft
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import Hamburger from "hamburger-react";
 
 function Logged() {
-  const [messageStatus, setMessageStatus] = useState("")
-  const [appearPopUpMessage, setAppearPopUpMessage] = useState(false);
-  let stylePopUpMessage = {}
+  const [nbreLike, setNbreLike] = useState(0);
 
-  const [successStyle, setSuccessStyle ] = useState(false)
-  let stylePMessage = {}
-  let stylecontainerTrendsMobile = {}
-  const [appearContainerT,setAppearContainerT] = useState(false)
+  const [messagNoTweet, setMessageNoTweet] = useState(false);
+  const [messagNoTweetP, setMessageNoTweetP] = useState(false);
+
+  const [messageStatus, setMessageStatus] = useState("");
+  const [appearPopUpMessage, setAppearPopUpMessage] = useState(false);
+  let stylePopUpMessage = {};
+
+  const [successStyle, setSuccessStyle] = useState(false);
+  let stylePMessage = {};
+  let stylecontainerTrendsMobile = {};
+  const [appearContainerT, setAppearContainerT] = useState(false);
   const [isOpen, setOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -54,16 +59,14 @@ function Logged() {
     })
       .then((res) => res.json())
       .then((data) => {
-        if(data.result){
-          setSuccessStyle(true)
-          setAppearPopUpMessage(true)
-          setMessageStatus(data.message)
-          
-        }else{
-          setSuccessStyle(false)
-          setAppearPopUpMessage(true)
-          setMessageStatus(data.message)
-
+        if (data.result) {
+          setSuccessStyle(true);
+          setAppearPopUpMessage(true);
+          setMessageStatus(data.message);
+        } else {
+          setSuccessStyle(false);
+          setAppearPopUpMessage(true);
+          setMessageStatus(data.message);
         }
 
         // console.log(data);
@@ -82,30 +85,29 @@ function Logged() {
     fetch("https://backend-teewt.vercel.app/users/tweets")
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data);
-        setTweetData(data.allTweet);
+        
+        // console.log(data);  
+        setTweetData(data.allTweet);       
+
+        
         // setTweetHashtag(data.allTweet);
       });
   }, [tweetData]);
 
   const regexHashTag = /(#+[a-zA-Z0-9(_)]{1,})/;
 
-
-
-  if(appearPopUpMessage){
-    stylePopUpMessage={
+  if (appearPopUpMessage) {
+    stylePopUpMessage = {
       transition: "all .3s",
       opacity: "1",
       visibility: "visible",
-      'top':"1rem",
-    }
+      top: "1rem",
+    };
 
-  
+    setTimeout(() => {
+      setAppearPopUpMessage(false);
+    }, 2000);
   }
-
-
-
-
 
   const tweet = () => {
     //get the time of the tweet
@@ -134,24 +136,16 @@ function Logged() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        if(data.result){
-
-
-          setSuccessStyle(true)
-          setAppearPopUpMessage(true)
-          setMessageStatus(data.message)
-          
-        }else{
-          setSuccessStyle(false)
-          setAppearPopUpMessage(true)
-          setMessageStatus(data.message)
-
+        console.log(data);
+        if (data.result) {
+          setSuccessStyle(true);
+          setAppearPopUpMessage(true);
+          setMessageStatus(data.message);
+        } else {
+          setSuccessStyle(false);
+          setAppearPopUpMessage(true);
+          setMessageStatus(data.message);
         }
-
-
-
-
       });
     setTweetContent("");
   };
@@ -169,6 +163,8 @@ function Logged() {
         setTweetData(data.allTweet);
       });
   };
+
+
 
   const tweetList = tweetData.map((data, i) => {
     if (data.username == logStatus[2] && data.firstname == logStatus[1]) {
@@ -193,8 +189,9 @@ function Logged() {
           </ul>
           <p>{data.content}</p>
           <div className={style.buttonContainer}>
-            <span className={style.like}>
+            <span data-id={data._id} onClick={() => {}} className={style.like}>
               <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
+              <span>{nbreLike}</span>
             </span>
             <span
               onClick={() => removeTweet(data._id)}
@@ -209,6 +206,28 @@ function Logged() {
       </>
     );
   });
+
+
+
+//   if(tweetList.length == 0){
+//     setMessageNoTweet(true)
+//   }
+
+// let p = ''
+
+
+
+//   if (messagNoTweet) {
+//     p = <p className={style.noTweet}>No tweet to display</p>;
+//   }
+
+  // if(tweetList){
+  //   setMessageNoTweet(true)
+
+
+  // }
+
+  // ƒ
   const unique = [];
   const arrayHashtag = [];
 
@@ -254,31 +273,47 @@ function Logged() {
     );
   });
 
-  const FappearContainerT = ()=>{
-    setAppearContainerT(true)
-  }
+  const FappearContainerT = () => {
+    setAppearContainerT(true);
+  };
 
-  const FdisappearContainerT = ()=>{
-    setAppearContainerT(false)
+  const FdisappearContainerT = () => {
+    setAppearContainerT(false);
+  };
 
-  }
+  //router.post("/tweets/:id/like", (req, res) => {
 
+  const likeTweet = (id) => {
+    fetch(`http://localhost:3000/users/tweets/${id}/like`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstname: logStatus[1].toString(),
+        username: logStatus[2].toString(),
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
 
-  if(successStyle){
-    stylePMessage={
+  if (successStyle) {
+    stylePMessage = {
       transition: "all .3s",
-      color:'green'
-
-    }
+      color: "green",
+    };
   }
 
-  if(appearContainerT){
-    stylecontainerTrendsMobile={
+  if (appearContainerT) {
+    stylecontainerTrendsMobile = {
       transition: "all .3s",
       left: "0",
       opacity: "1",
       visibility: "visible",
-    }
+    };
   }
   if (isOpen) {
     styleMenuMobile = {
@@ -300,14 +335,15 @@ function Logged() {
   return (
     <>
       <div className={style.main}>
-      <div className={styles.popUpMessage} onClick={
-        ()=>   setAppearPopUpMessage(false)
-
-      } style={stylePopUpMessage}>
-        <div className={styles.popUpMessageContent}>
-          <p style={stylePMessage}>{messageStatus}</p>
+        <div
+          className={styles.popUpMessage}
+          onClick={() => setAppearPopUpMessage(false)}
+          style={stylePopUpMessage}
+        >
+          <div className={styles.popUpMessageContent}>
+            <p style={stylePMessage}>{messageStatus}</p>
+          </div>
         </div>
-      </div>
         <div className={style.firstPart}>
           <img src="/twitter_logo_white.png" alt="logo white png"></img>
           <div className={style.infoContainer}>
@@ -335,13 +371,19 @@ function Logged() {
             <img src="/twitter_logo_white.png" alt="logo white png"></img>
           </div>
 
-          <div className={style.containerTrendsMobile}  style={stylecontainerTrendsMobile}>
-            <button onClick={()=>{
-                    FdisappearContainerT()
-                    }}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
+          <div
+            className={style.containerTrendsMobile}
+            style={stylecontainerTrendsMobile}
+          >
+            <button
+              onClick={() => {
+                FdisappearContainerT();
+              }}
+            >
+              <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+            </button>
             <h1>Les Trends</h1>
             <ul className={style.containerTrends}>{hashtagList.reverse()}</ul>
-
           </div>
           <div className={style.menuMobile} style={styleMenuMobile}>
             <div className={style.contentLog}>
@@ -357,11 +399,9 @@ function Logged() {
                 </span>
                 Home
               </li>
-              <li onClick={()=>
-                    FappearContainerT()
-                    }>
+              <li onClick={() => FappearContainerT()}>
                 <span>
-                  <FontAwesomeIcon  icon={faHashtag}></FontAwesomeIcon>
+                  <FontAwesomeIcon icon={faHashtag}></FontAwesomeIcon>
                 </span>
                 Explore
               </li>
@@ -403,7 +443,6 @@ function Logged() {
               </li>
             </ul>
           </div>
-
           {tweetList.reverse()}
         </div>
         <div className={style.thirdPart}>

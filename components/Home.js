@@ -111,6 +111,9 @@ const [messageStatus, setMessageStatus] = useState("")
         }else{
           setAppearPopUpMessage(true)
           
+    setTimeout(() => {
+      setAppearPopUpMessage(false);
+    }, 2000);
         }
       });
   };
@@ -136,6 +139,10 @@ const [messageStatus, setMessageStatus] = useState("")
 
           setMessageStatus(data.message)
           setAppearPopUpMessage(true)
+
+    setTimeout(() => {
+      setAppearPopUpMessage(false);
+    }, 2000);
         }
       });
   };

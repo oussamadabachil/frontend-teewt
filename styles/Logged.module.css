@@ -233,6 +233,7 @@
 }
 
 .ListTweet>ul{
+  cursor: pointer;
   margin-left: -2rem;
   align-items: center;
   width: 23rem;
@@ -253,6 +254,7 @@
   font-weight: 800;
 }
 .ListTweet>ul>li{
+  cursor: pointer;
   font-weight: 300;
 }
 
