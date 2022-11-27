@@ -27,6 +27,7 @@ function App({ Component, pageProps }) {
         <PersistGate persistor={persistor}>
           <Head>
             <title>Teewt</title>
+            <meta meta name="viewport" content="width=device-width, user-scalable=no" />
           </Head>
           <Component {...pageProps} />
         </PersistGate>
