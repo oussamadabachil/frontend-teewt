@@ -47,7 +47,6 @@
 
 }
 .signUpPopUp input:first-child{
-  text-transform: lowercase;
   display: none;
   margin-top: 12rem;
 }
@@ -60,7 +59,6 @@
   font-family: MontHeavy;
 }
 .signUpPopUp input{
-  text-transform: lowercase;
   border: .1rem solid white;
   color: white;
   border-radius: 1rem;
