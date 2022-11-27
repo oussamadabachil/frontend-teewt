@@ -296,7 +296,7 @@ const tweetListHashtagged =  tweetFromHashtag.map((data, i) => {
       transition: "all .3s",
       opacity: "1",
       visibility: "visible",
-      height: "95vh",
+      height: "80vh",
       
     };
 
