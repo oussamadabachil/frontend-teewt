@@ -1,4 +1,6 @@
 import style from "../styles/Logged.module.css";
+import styles from "../styles/Home.module.css";
+
 import { Animated } from "react-animated-css";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -19,7 +21,12 @@ import {
 import Hamburger from "hamburger-react";
 
 function Logged() {
+  const [messageStatus, setMessageStatus] = useState("")
+  const [appearPopUpMessage, setAppearPopUpMessage] = useState(false);
+  let stylePopUpMessage = {}
 
+  const [successStyle, setSuccessStyle ] = useState(false)
+  let stylePMessage = {}
   let stylecontainerTrendsMobile = {}
   const [appearContainerT,setAppearContainerT] = useState(false)
   const [isOpen, setOpen] = useState(false);
@@ -47,6 +54,18 @@ function Logged() {
     })
       .then((res) => res.json())
       .then((data) => {
+        if(data.result){
+          setSuccessStyle(true)
+          setAppearPopUpMessage(true)
+          setMessageStatus(data.message)
+          
+        }else{
+          setSuccessStyle(false)
+          setAppearPopUpMessage(true)
+          setMessageStatus(data.message)
+
+        }
+
         // console.log(data);
       });
   };
@@ -70,6 +89,18 @@ function Logged() {
   }, [tweetData]);
 
   const regexHashTag = /(#+[a-zA-Z0-9(_)]{1,})/;
+
+
+
+  if(appearPopUpMessage){
+    stylePopUpMessage={
+      'box-shadow': 'rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;',
+      transition: "all .3s",
+      opacity: "1",
+      visibility: "visible",
+      'top':"1rem",
+    }}
+
 
   const tweet = () => {
     //get the time of the tweet
@@ -97,7 +128,26 @@ function Logged() {
       }),
     })
       .then((response) => response.json())
-      .then((data) => {});
+      .then((data) => {
+        console.log(data)
+        if(data.result){
+
+
+          setSuccessStyle(true)
+          setAppearPopUpMessage(true)
+          setMessageStatus(data.message)
+          
+        }else{
+          setSuccessStyle(false)
+          setAppearPopUpMessage(true)
+          setMessageStatus(data.message)
+
+        }
+
+
+
+
+      });
     setTweetContent("");
   };
 
@@ -208,8 +258,18 @@ function Logged() {
 
   }
 
+
+  if(successStyle){
+    stylePMessage={
+      transition: "all .3s",
+      color:'green'
+
+    }
+  }
+
   if(appearContainerT){
     stylecontainerTrendsMobile={
+      
       transition: "all .3s",
       left: "0",
       opacity: "1",
@@ -236,6 +296,11 @@ function Logged() {
   return (
     <>
       <div className={style.main}>
+      <div className={styles.popUpMessage} style={stylePopUpMessage}>
+        <div className={styles.popUpMessageContent}>
+          <p style={stylePMessage}>{messageStatus}</p>
+        </div>
+      </div>
         <div className={style.firstPart}>
           <img src="/twitter_logo_white.png" alt="logo white png"></img>
           <div className={style.infoContainer}>
