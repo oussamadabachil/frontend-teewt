@@ -48,6 +48,26 @@ function Logged() {
   let styleHashtag = {};
   let styleTextMax = {};
 
+
+  const findTweetFromHashtag = (x) => {
+    fetch(`https://backend-teewt.vercel.app/users/tweets/hashtag/${x}`)
+      .then((response) => response.text())
+      .then((data) => {
+
+        if(data.result){
+
+        console.log(data);
+        }else{
+          console.log("no",data);
+
+          // setMessageNoTweet(true);
+          // setMessageNoTweetP(true);
+        }
+
+      });
+  };
+
+    
   const removeTweet = (x) => {
     // confirm(x)
 
@@ -85,11 +105,9 @@ function Logged() {
     fetch("https://backend-teewt.vercel.app/users/tweets")
       .then((response) => response.json())
       .then((data) => {
-        
-        // console.log(data);  
-        setTweetData(data.allTweet);       
+        // console.log(data);
+        setTweetData(data.allTweet);
 
-        
         // setTweetHashtag(data.allTweet);
       });
   }, [tweetData]);
@@ -155,17 +173,6 @@ function Logged() {
     router.push("/");
   };
 
-  const findTweetFromHashtag = (x) => {
-    fetch(`https://backend-teewt.vercel.app/users/tweets/${x}`)
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data);
-        setTweetData(data.allTweet);
-      });
-  };
-
-
-
   const tweetList = tweetData.map((data, i) => {
     if (data.username == logStatus[2] && data.firstname == logStatus[1]) {
       styleHashtag = { display: "inline" };
@@ -207,23 +214,18 @@ function Logged() {
     );
   });
 
+  //   if(tweetList.length == 0){
+  //     setMessageNoTweet(true)
+  //   }
 
+  // let p = ''
 
-//   if(tweetList.length == 0){
-//     setMessageNoTweet(true)
-//   }
-
-// let p = ''
-
-
-
-//   if (messagNoTweet) {
-//     p = <p className={style.noTweet}>No tweet to display</p>;
-//   }
+  //   if (messagNoTweet) {
+  //     p = <p className={style.noTweet}>No tweet to display</p>;
+  //   }
 
   // if(tweetList){
   //   setMessageNoTweet(true)
-
 
   // }
 
@@ -256,11 +258,11 @@ function Logged() {
 
     return (
       <>
-        <li>
-          <span
-            onClick={() => {
+        <li  onClick={() => {
               findTweetFromHashtag(data);
-            }}
+            }}>
+          <span
+           
           >
             {data}
           </span>
@@ -283,22 +285,22 @@ function Logged() {
 
   //router.post("/tweets/:id/like", (req, res) => {
 
-  const likeTweet = (id) => {
-    fetch(`http://localhost:3000/users/tweets/${id}/like`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstname: logStatus[1].toString(),
-        username: logStatus[2].toString(),
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
-  };
+  // const likeTweet = (id) => {
+  //   fetch(`http://localhost:3000/users/tweets/${id}/like`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       firstname: logStatus[1].toString(),
+  //       username: logStatus[2].toString(),
+  //     }),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //     });
+  // };
 
   if (successStyle) {
     stylePMessage = {
@@ -329,6 +331,17 @@ function Logged() {
   // });
 
   //show only hashtag
+
+
+    // let hashtag = x;
+    // console.log(hashtag);
+    // fetch(`http://localhost:3000/users/tweets/${x}`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     // setTweetData(data.tweets);
+    //   });
+  
 
   //not showing the duplicate hashtag from the array and return the hashtag in a list
 

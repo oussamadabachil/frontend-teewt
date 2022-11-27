@@ -80,6 +80,11 @@
 
 }
 .blockright{
+
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
   padding: 1rem;
   float: right;
   width: 61%;
