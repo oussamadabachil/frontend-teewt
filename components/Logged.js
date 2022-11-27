@@ -274,7 +274,6 @@ function Logged() {
 
   if(appearContainerT){
     stylecontainerTrendsMobile={
-      
       transition: "all .3s",
       left: "0",
       opacity: "1",
@@ -282,9 +281,10 @@ function Logged() {
     }
   }
   if (isOpen) {
+    alert("kndzz")
     styleMenuMobile = {
       transition: "all .3s",
-      left: "0",
+      left: "0rem",
       opacity: "1",
       visibility: "visible",
     };
