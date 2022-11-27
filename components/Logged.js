@@ -6,11 +6,23 @@ import { useDispatch } from "react-redux";
 import { showStatusLog, showIds, eraseId } from "../reducers/logged";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faTrash,faHome,faHashtag,faBell,faEnvelope,faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import Hamburger from 'hamburger-react'
+import {
+  faHeart,
+  faTrash,
+  faHome,
+  faHashtag,
+  faBell,
+  faEnvelope,
+  faRightFromBracket,
+  faArrowLeft
+} from "@fortawesome/free-solid-svg-icons";
+import Hamburger from "hamburger-react";
 
 function Logged() {
-  const [isOpen, setOpen] = useState(false)
+
+  let stylecontainerTrendsMobile = {}
+  const [appearContainerT,setAppearContainerT] = useState(false)
+  const [isOpen, setOpen] = useState(false);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -27,7 +39,7 @@ function Logged() {
   const removeTweet = (x) => {
     // confirm(x)
 
-    fetch(`https://backend-teewt.vercel.app/users/tweets/${x}`, {
+    fetch(`https://backend-teewt.vercel.app/users/tweets/delete/${x}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -113,10 +125,7 @@ function Logged() {
     let hashtag = data.content.match(regexHashTag);
 
     return (
-      
       <>
-
-      
         <div className={style.ListTweet}>
           <ul>
             <li>
@@ -174,9 +183,13 @@ function Logged() {
     return (
       <>
         <li>
-          <span onClick={()=>{
-            findTweetFromHashtag(data)
-          }} >{data}</span>
+          <span
+            onClick={() => {
+              findTweetFromHashtag(data);
+            }}
+          >
+            {data}
+          </span>
           <br></br>
           <span className={style.nbrTweet}>
             {tweetContentNbre}: {count}
@@ -186,18 +199,31 @@ function Logged() {
     );
   });
 
-  if(isOpen){
-     styleMenuMobile = {
-      'transition': 'all .3s',
-      'left': '0',
-      'opacity': '1',
-      'visibility': 'visible'
-  
-     };
+  const FappearContainerT = ()=>{
+    setAppearContainerT(true)
+  }
 
+  const FdisappearContainerT = ()=>{
+    setAppearContainerT(false)
 
   }
 
+  if(appearContainerT){
+    stylecontainerTrendsMobile={
+      transition: "all .3s",
+      left: "0",
+      opacity: "1",
+      visibility: "visible",
+    }
+  }
+  if (isOpen) {
+    styleMenuMobile = {
+      transition: "all .3s",
+      left: "0",
+      opacity: "1",
+      visibility: "visible",
+    };
+  }
 
   // let duplicateChar = arrayHashtag.filter((element, index) => {
   //   return arrayHashtag.indexOf(element) !== index;
@@ -227,31 +253,65 @@ function Logged() {
         <div className={style.secondPart}>
           <div className={style.HeaderMobile}>
             <span>
-            <Hamburger toggle={setOpen} toggled={isOpen} className={style.Hamburger} direction="right" />
+              <Hamburger
+                toggle={setOpen}
+                toggled={isOpen}
+                className={style.Hamburger}
+                direction="right"
+              />
             </span>
             <img src="/twitter_logo_white.png" alt="logo white png"></img>
           </div>
 
+          <div className={style.containerTrendsMobile}  style={stylecontainerTrendsMobile}>
+            <button onClick={()=>{
+                    FdisappearContainerT()
+                    }}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
+            <h1>Les Trends</h1>
+            <ul className={style.containerTrends}>{hashtagList.reverse()}</ul>
+
+          </div>
           <div className={style.menuMobile} style={styleMenuMobile}>
+            <div className={style.contentLog}>
+              <h1>Bonjour {logStatus[1]}</h1>
+              <p>@{logStatus[2]}</p>
+            </div>
+
             <ul>
               <li>
-               
-                <span> <FontAwesomeIcon icon={faHome}></FontAwesomeIcon></span>Home
+                <span>
+                  {" "}
+                  <FontAwesomeIcon icon={faHome}></FontAwesomeIcon>
+                </span>
+                Home
+              </li>
+              <li onClick={()=>
+                    FappearContainerT()
+                    }>
+                <span>
+                  <FontAwesomeIcon  icon={faHashtag}></FontAwesomeIcon>
+                </span>
+                Explore
               </li>
               <li>
-                <span><FontAwesomeIcon icon={faHashtag}></FontAwesomeIcon></span>Explore
+                <span>
+                  <FontAwesomeIcon icon={faBell}></FontAwesomeIcon>
+                </span>
+                Notifications
               </li>
               <li>
-                <span><FontAwesomeIcon icon={faBell}></FontAwesomeIcon></span>Notifications
-              </li>
-              <li>
-                <span><FontAwesomeIcon icon={faEnvelope}></FontAwesomeIcon></span>Messages
-              </li>
-              
-              <li onClick={() => eraseLogStatus()}>
-                <span ><FontAwesomeIcon icon={faRightFromBracket}></FontAwesomeIcon></span>Déconnexion
+                <span>
+                  <FontAwesomeIcon icon={faEnvelope}></FontAwesomeIcon>
+                </span>
+                Messages
               </li>
 
+              <li onClick={() => eraseLogStatus()}>
+                <span>
+                  <FontAwesomeIcon icon={faRightFromBracket}></FontAwesomeIcon>
+                </span>
+                Déconnexion
+              </li>
             </ul>
           </div>
           <div className={style.writeTwitter}>
