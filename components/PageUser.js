@@ -90,7 +90,9 @@ function PageUser() {
             <button onClick={()=>{
                     FdisappearContainerT()
                     }}><FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon></button>
-            <h1>Les Trends</h1>
+            <h1>Les Trends </h1>
+
+
             {/* <ul className={style.containerTrends}>{hashtagList.reverse()}</ul> */}
 
           </div>

@@ -232,6 +232,31 @@
   clip-path: circle(40%);
 }
 
+.MainContainerTweetFH{
+
+  top: 50%;
+  border-radius: 1rem;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  position: absolute;
+  width: 80rem;
+  height: 90vh;
+  background-color: rgb(30,37,47);
+  z-index: 13;
+
+}
+.MainContainerTweetFH>h1{
+  color: white;
+  margin-left: 1rem;
+}
+.MainContainerTweetFH>span{
+  position: absolute;
+  font-size: 3rem;
+  top: 1rem;
+  right: 1rem;
+  color: white;
+  margin-left: 1rem;
+}
 .ListTweet>ul{
   cursor: pointer;
   margin-left: -2rem;

@@ -17,6 +17,7 @@ import {
   faEnvelope,
   faRightFromBracket,
   faArrowLeft,
+  faXmark
 } from "@fortawesome/free-solid-svg-icons";
 import Hamburger from "hamburger-react";
 
@@ -25,7 +26,7 @@ function Logged() {
 
   const [messagNoTweet, setMessageNoTweet] = useState(false);
   const [messagNoTweetP, setMessageNoTweetP] = useState(false);
-
+  const [tweetFromHashtag, setTweetFromHashtag] = useState([false]);
   const [messageStatus, setMessageStatus] = useState("");
   const [appearPopUpMessage, setAppearPopUpMessage] = useState(false);
   let stylePopUpMessage = {};
@@ -61,7 +62,7 @@ function Logged() {
       .then((data) => {
         if (data.result) {
           console.log(data);
-          setTweetData(data.tweets);
+          setTweetFromHashtag(data.tweets);
         } else {
           console.log("no", data);
 
@@ -215,6 +216,47 @@ function Logged() {
     );
   });
 
+  const tweetListHashtag = tweetFromHashtag.map((data, i) => {
+    if (data.username == logStatus[2] && data.firstname == logStatus[1]) {
+      styleHashtag = { display: "inline" };
+    } else {
+      styleHashtag = { display: "none" };
+    }
+
+    let hashtag = data.content.match(regexHashTag);
+
+    return (
+      <>
+        <div className={style.ListTweet}>
+          <ul>
+            <li>
+              <img src="./iconetwitter.jpeg" alt="icone twitter"></img>
+            </li>
+            <li>
+              <span>{data.username}</span>@{data.firstname}
+              <span>{data.date}</span>
+            </li>
+          </ul>
+          <p>{data.content}</p>
+          <div className={style.buttonContainer}>
+            <span data-id={data._id} onClick={() => {}} className={style.like}>
+              <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
+              <span>{nbreLike}</span>
+            </span>
+            <span
+              onClick={() => removeTweet(data._id)}
+              data-id={data._id}
+              style={styleHashtag}
+              className={style.erase}
+            >
+              <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+            </span>
+          </div>
+        </div>
+      </>
+    );
+  });
+
   //   if(tweetList.length == 0){
   //     setMessageNoTweet(true)
   //   }
@@ -327,6 +369,18 @@ function Logged() {
   return (
     <>
       <div className={style.main}>
+
+        <div className={style.MainContainerTweetFH} >
+          <h1>Les Tweets par trends : <span></span></h1>
+          <span><FontAwesomeIcon icon={faXmark}></FontAwesomeIcon></span>
+
+          <div className={style.containerTweetFromH}>
+
+            {tweetListHashtag}
+
+          </div>
+
+        </div>
         <div
           className={styles.popUpMessage}
           onClick={() => setAppearPopUpMessage(false)}
