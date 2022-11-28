@@ -88,7 +88,7 @@ const [messageStatus, setMessageStatus] = useState("")
 
   //Bouton inscription
   const signUp = () => {
-    fetch("https://backend-teewt.vercel.app/users/signup", {
+    fetch("http://localhost:3000/users/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -97,6 +97,7 @@ const [messageStatus, setMessageStatus] = useState("")
         firstname: firstnameI,
         username: usernameI,
         password: passwordI,
+        image: "./iconetwitter.jpeg",
       }),
     })
       .then((response) => response.json())
@@ -107,6 +108,7 @@ const [messageStatus, setMessageStatus] = useState("")
           dispatch(showStatusLog(true));
           dispatch(showIds([data.user.username]));
           dispatch(showIds([data.user.firstname]));
+          dispatch(showIds([data.user.image]));
           router.push("/tweet");
         }else{
           setAppearPopUpMessage(true)
@@ -133,6 +135,7 @@ const [messageStatus, setMessageStatus] = useState("")
           dispatch(showStatusLog(true));
           dispatch(showIds([data.user.username]));
           dispatch(showIds([data.user.firstname]));
+          dispatch(showIds([data.user.image]));
           router.push("/tweet");
         }else{
 

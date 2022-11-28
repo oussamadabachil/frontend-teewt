@@ -67,11 +67,11 @@ function Logged() {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          console.log(data);
+          // console.log(data);
           setTweetFromHashtag(data.tweets);
           setAppearBlack(true);
         } else {
-          console.log("no", data);
+          // console.log("no", data);
 
           // setMessageNoTweet(true);
           // setMessageNoTweetP(true);
@@ -214,7 +214,7 @@ function Logged() {
         <div className={style.ListTweet}>
           <ul>
             <li>
-              <img src="./iconetwitter.jpeg" alt="icone twitter"></img>
+              <img src="./iconetwitter.jpeg" alt="icone twitter user"></img>
             </li>
             <li>
               <span>{data.username}</span>@{data.firstname}
@@ -419,7 +419,7 @@ const tweetListHashtagged =  tweetFromHashtag.map((data, i) => {
 
         <div className={style.MainContainerTweetFH}  style={styleContainerHashtag}>
           <h1>Les Tweets par trend : <span></span></h1>
-          <span  onClick={()=>{setAppearBlack(false), setAppearContainerHashTag(false)}}><FontAwesomeIcon icon={faXmark}></FontAwesomeIcon></span>
+          <span  onClick={()=>{setAppearBlack(false), setAppearContainerHashTag(false),setTweetFromHashtag([])}}><FontAwesomeIcon icon={faXmark}></FontAwesomeIcon></span>
 
           <div className={style.containerTweetFromH}>
 
