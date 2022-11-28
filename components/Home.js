@@ -88,7 +88,7 @@ const [messageStatus, setMessageStatus] = useState("")
 
   //Bouton inscription
   const signUp = () => {
-    fetch("http://localhost:3000/users/signup", {
+    fetch("https://backend-teewt.vercel.app/users/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
