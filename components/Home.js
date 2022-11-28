@@ -140,11 +140,8 @@ const [messageStatus, setMessageStatus] = useState("")
           dispatch(showIds([data.user.image]));
           router.push("/tweet");
         }else{
-
-
           setMessageStatus(data.message)
           setAppearPopUpMessage(true)
-
     setTimeout(() => {
       setAppearPopUpMessage(false);
     }, 2000);

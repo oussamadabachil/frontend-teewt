@@ -536,6 +536,31 @@ const tweetListHashtagged =  tweetFromHashtag.map((data, i) => {
               </li>
             </ul>
           </div>
+          <div className={style.ListTweet}>
+          <ul>
+            <li>
+              <img src="./iconetwitter.jpeg" alt="icone twitter user"></img>
+            </li>
+            <li>
+              <span>Ouss</span>@LeVrai
+              {/* <span>{data.date}</span> */}
+            </li>
+          </ul>
+          <p>Merci à vous tous ! 🥰 (big up a Eze) (tweet épinglé)</p>
+          <div className={style.buttonContainer}>
+            <span data-id='unique id'  className={style.like}>
+              <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
+              <span className={style.counterLike}>infini</span>
+            </span>
+            <span
+              // onClick={() => removeTweet(data._id)}
+              style={styleHashtag}
+              className={style.erase}
+            >
+              <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+            </span>
+          </div>
+        </div>
           {tweetList.reverse()}
         </div>
         <div className={style.thirdPart}>
