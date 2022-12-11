@@ -6,8 +6,7 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { showStatusLog, showIds } from "../reducers/logged";
 function Home() {
-
-  let stylePopUpMessage = {}
+  let stylePopUpMessage = {};
   const router = useRouter();
 
   const dispatch = useDispatch();
@@ -20,7 +19,7 @@ function Home() {
 
   const [usernameC, setUsernameC] = useState();
   const [passwordC, setPasswordC] = useState();
-const [messageStatus, setMessageStatus] = useState("")
+  const [messageStatus, setMessageStatus] = useState("");
   const [appearSignUp, setAppearSignUp] = useState(false);
   const [appearSignIn, setAppearSignIn] = useState(false);
   const [appearBlack, setAppearBlack] = useState(false);
@@ -65,25 +64,25 @@ const [messageStatus, setMessageStatus] = useState("")
     };
   }
 
-  if(appearPopUpMessage){
-    stylePopUpMessage={
+  if (appearPopUpMessage) {
+    stylePopUpMessage = {
       transition: "all .3s",
       opacity: "1",
       visibility: "visible",
-      top:"1rem",
-    }}
+      top: "1rem",
+    };
+  }
 
   const HideSUBlack = () => {
     setAppearBlack(false);
     setAppearSignUp(false);
     setAppearSignIn(false);
-    setAppearPopUpMessage(false)
-
+    setAppearPopUpMessage(false);
   };
   const HideSIBlack = () => {
     setAppearBlack(false);
     setAppearSignIn(false);
-    setAppearPopUpMessage(false)
+    setAppearPopUpMessage(false);
   };
 
   //Bouton inscription
@@ -103,21 +102,20 @@ const [messageStatus, setMessageStatus] = useState("")
       .then((response) => response.json())
       .then((data) => {
         // console.log(data);
-        setMessageStatus(data.message)
+        setMessageStatus(data.message);
         if (data.result) {
           dispatch(showStatusLog(true));
           dispatch(showIds([data.user.username]));
           dispatch(showIds([data.user.firstname]));
           dispatch(showIds([data.user.image]));
           router.push("/tweet");
-        }else{
-          
-          setMessageStatus(data.message)
-          setAppearPopUpMessage(true)
-          
-    setTimeout(() => {
-      setAppearPopUpMessage(false);
-    }, 2000);
+        } else {
+          setMessageStatus(data.message);
+          setAppearPopUpMessage(true);
+
+          setTimeout(() => {
+            setAppearPopUpMessage(false);
+          }, 2000);
         }
       });
   };
@@ -139,12 +137,12 @@ const [messageStatus, setMessageStatus] = useState("")
           dispatch(showIds([data.user.firstname]));
           dispatch(showIds([data.user.image]));
           router.push("/tweet");
-        }else{
-          setMessageStatus(data.message)
-          setAppearPopUpMessage(true)
-    setTimeout(() => {
-      setAppearPopUpMessage(false);
-    }, 2000);
+        } else {
+          setMessageStatus(data.message);
+          setAppearPopUpMessage(true);
+          setTimeout(() => {
+            setAppearPopUpMessage(false);
+          }, 2000);
         }
       });
   };
@@ -166,7 +164,7 @@ const [messageStatus, setMessageStatus] = useState("")
           <p>{messageStatus}</p>
         </div>
       </div>
-      
+
       <div className={styles.signUpPopUp} style={signUpStyle}>
         <h3>Create your Teewt account</h3>
         <span onClick={() => HideSUBlack()}>x</span>
@@ -191,8 +189,6 @@ const [messageStatus, setMessageStatus] = useState("")
         ></input>
         <button onClick={() => signUp()}>Sign Up</button>
       </div>
-
-
 
       <div className={styles.signUpPopUp} style={signInStyle}>
         <h3>Sign In</h3>

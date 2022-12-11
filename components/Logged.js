@@ -17,7 +17,7 @@ import {
   faEnvelope,
   faRightFromBracket,
   faArrowLeft,
-  faXmark
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import Hamburger from "hamburger-react";
 
@@ -27,7 +27,6 @@ function Logged() {
   let blackOpacity = {};
   const [appearBlack, setAppearBlack] = useState(false);
 
-
   const [messagNoTweet, setMessageNoTweet] = useState(false);
   const [appearContainerHashtag, setAppearContainerHashTag] = useState(false);
   const [messagNoTweetP, setMessageNoTweetP] = useState(false);
@@ -36,7 +35,7 @@ function Logged() {
   const [appearPopUpMessage, setAppearPopUpMessage] = useState(false);
   let stylePopUpMessage = {};
 
-  let styleContainerHashtag= {};
+  let styleContainerHashtag = {};
   const [successStyle, setSuccessStyle] = useState(false);
   let stylePMessage = {};
   let stylecontainerTrendsMobile = {};
@@ -58,12 +57,15 @@ function Logged() {
   const findTweetFromHashtag = (x) => {
     let hashtag = x;
     let hashtagToFind = hashtag.replace("#", "");
-    fetch(`https://backend-teewt.vercel.app/users/tweets/hashtag/${hashtagToFind}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      `https://backend-teewt.vercel.app/users/tweets/hashtag/${hashtagToFind}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
@@ -72,15 +74,11 @@ function Logged() {
           setAppearBlack(true);
         } else {
           // console.log("no", data);
-
           // setMessageNoTweet(true);
           // setMessageNoTweetP(true);
         }
       });
   };
-
-
-
 
   const removeTweet = (x) => {
     // confirm(x)
@@ -138,19 +136,13 @@ function Logged() {
     }, 2000);
   }
 
-
-
-
-
-
-  if(appearBlack){
+  if (appearBlack) {
     blackOpacity = {
       transition: "all .3s",
       opacity: "1",
       visibility: "visible",
-  
-    }
-    console.log("ok")
+    };
+    console.log("ok");
   }
 
   const tweet = () => {
@@ -166,7 +158,6 @@ function Logged() {
 
     // refreshData()
 
-
     fetch("https://backend-teewt.vercel.app/users/tweets", {
       method: "POST",
       headers: {
@@ -177,7 +168,7 @@ function Logged() {
         username: logStatus[2].toString(),
         content: tweetContent.toString(),
         date: time,
-        }),
+      }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -241,66 +232,54 @@ function Logged() {
     );
   });
 
-
   //Black opacity
-  
 
-const tweetListHashtagged =  tweetFromHashtag.map((data, i) => {
+  const tweetListHashtagged = tweetFromHashtag.map((data, i) => {
+    if (data.username == logStatus[2] && data.firstname == logStatus[1]) {
+      styleHashtag = { display: "inline" };
+    } else {
+      styleHashtag = { display: "none" };
+    }
 
-  if (data.username == logStatus[2] && data.firstname == logStatus[1]) {
-    styleHashtag = { display: "inline" };
-  } else {
-    styleHashtag = { display: "none" };
-  }
-  
-  return (
-    <>
-      <div className={style.ListTweet}>
-        <ul>
-          <li>
-            <img src="./iconetwitter.jpeg" alt="icone twitter"></img>
-          </li>
-          <li>
-            <span>{data.username}</span>@{data.firstname}
-            <span>{data.date}</span>
-          </li>
-        </ul>
-        <p>{data.content}</p>
-        <div className={style.buttonContainer}>
-          <span data-id={data._id} onClick={() => {}} className={style.like}>
-            <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
-            <span>{nbreLike}</span>
-          </span>
-          <span
-            onClick={() => removeTweet(data._id)}
-            data-id={data._id}
-            style={styleHashtag}
-            className={style.erase}
-          >
-            <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-          </span>
+    return (
+      <>
+        <div className={style.ListTweet}>
+          <ul>
+            <li>
+              <img src="./iconetwitter.jpeg" alt="icone twitter"></img>
+            </li>
+            <li>
+              <span>{data.username}</span>@{data.firstname}
+              <span>{data.date}</span>
+            </li>
+          </ul>
+          <p>{data.content}</p>
+          <div className={style.buttonContainer}>
+            <span data-id={data._id} onClick={() => {}} className={style.like}>
+              <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
+              <span>{nbreLike}</span>
+            </span>
+            <span
+              onClick={() => removeTweet(data._id)}
+              data-id={data._id}
+              style={styleHashtag}
+              className={style.erase}
+            >
+              <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+            </span>
+          </div>
         </div>
-      </div>
-    </>
-  );
-});
-  
-  
+      </>
+    );
+  });
 
-
-  
-
-  if(appearContainerHashtag){
-
+  if (appearContainerHashtag) {
     styleContainerHashtag = {
       transition: "all .3s",
       opacity: "1",
       visibility: "visible",
       height: "80vh",
-      
     };
-
- 
   }
 
   //   if(tweetList.length == 0){
@@ -325,16 +304,12 @@ const tweetListHashtagged =  tweetFromHashtag.map((data, i) => {
   const allTweetHashtagData = tweetData.map((data, i) => {
     let hashtag = data.content.match(regexHashTag);
 
-
     if (hashtag) {
       arrayHashtag.push(hashtag[0]);
     }
 
     unique = [...new Set(arrayHashtag)];
-
   });
-
-
 
   const hashtagList = unique.map((data, i) => {
     let tweetContentNbre = <>Tweet</>;
@@ -416,17 +391,24 @@ const tweetListHashtagged =  tweetFromHashtag.map((data, i) => {
   return (
     <>
       <div className={style.main}>
+        <div
+          className={style.MainContainerTweetFH}
+          style={styleContainerHashtag}
+        >
+          <h1>
+            Les Tweets par trend : <span></span>
+          </h1>
+          <span
+            onClick={() => {
+              setAppearBlack(false),
+                setAppearContainerHashTag(false),
+                setTweetFromHashtag([]);
+            }}
+          >
+            <FontAwesomeIcon icon={faXmark}></FontAwesomeIcon>
+          </span>
 
-        <div className={style.MainContainerTweetFH}  style={styleContainerHashtag}>
-          <h1>Les Tweets par trend : <span></span></h1>
-          <span  onClick={()=>{setAppearBlack(false), setAppearContainerHashTag(false),setTweetFromHashtag([])}}><FontAwesomeIcon icon={faXmark}></FontAwesomeIcon></span>
-
-          <div className={style.containerTweetFromH}>
-
-            {tweetListHashtagged}
-
-          </div>
-
+          <div className={style.containerTweetFromH}>{tweetListHashtagged}</div>
         </div>
         <div
           className={styles.popUpMessage}
@@ -537,30 +519,30 @@ const tweetListHashtagged =  tweetFromHashtag.map((data, i) => {
             </ul>
           </div>
           <div className={style.ListTweet}>
-          <ul>
-            <li>
-              <img src="./iconetwitter.jpeg" alt="icone twitter user"></img>
-            </li>
-            <li>
-              <span>Ouss</span>@LeVrai
-              {/* <span>{data.date}</span> */}
-            </li>
-          </ul>
-          <p>Merci à vous tous ! 🥰 (big up a Eze) (tweet épinglé)</p>
-          <div className={style.buttonContainer}>
-            <span data-id='unique id'  className={style.like}>
-              <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
-              <span className={style.counterLike}>infini</span>
-            </span>
-            <span
-              // onClick={() => removeTweet(data._id)}
-              style={styleHashtag}
-              className={style.erase}
-            >
-              <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-            </span>
+            <ul>
+              <li>
+                <img src="./iconetwitter.jpeg" alt="icone twitter user"></img>
+              </li>
+              <li>
+                <span>Ouss</span>@LeVrai
+                {/* <span>{data.date}</span> */}
+              </li>
+            </ul>
+            <p>Merci à vous tous ! 🥰 (big up a Eze) (tweet épinglé)</p>
+            <div className={style.buttonContainer}>
+              <span data-id="unique id" className={style.like}>
+                <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
+                <span className={style.counterLike}>infini</span>
+              </span>
+              <span
+                // onClick={() => removeTweet(data._id)}
+                style={styleHashtag}
+                className={style.erase}
+              >
+                <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+              </span>
+            </div>
           </div>
-        </div>
           {tweetList.reverse()}
         </div>
         <div className={style.thirdPart}>
@@ -569,7 +551,9 @@ const tweetListHashtagged =  tweetFromHashtag.map((data, i) => {
         </div>
       </div>
       <div
-        onClick={()=>{setAppearBlack(false), setAppearContainerHashTag(false)} }
+        onClick={() => {
+          setAppearBlack(false), setAppearContainerHashTag(false);
+        }}
         className={style.blackOpacity}
         style={blackOpacity}
       ></div>
